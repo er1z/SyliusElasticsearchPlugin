@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -32,6 +30,9 @@ final class HasChannelQueryBuilder implements QueryBuilderInterface
 
     public function buildQuery(array $data): ?AbstractQuery
     {
-        return new Terms($this->channelsProperty, [strtolower($this->channelContext->getChannel()->getCode())]);
+        $channelQuery = new Terms($this->channelsProperty);
+        $channelQuery->setTerms([strtolower($this->channelContext->getChannel()->getCode())]);
+
+        return $channelQuery;
     }
 }

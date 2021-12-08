@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -17,9 +15,9 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperI
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use Elastica\Document;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Core\Model\ProductInterface;
+use spec\BitBag\SyliusElasticsearchPlugin\EventMother;
 
 final class ProductTaxonsBuilderSpec extends ObjectBehavior
 {
@@ -39,11 +37,8 @@ final class ProductTaxonsBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event, ProductInterface $product, Document $document): void
+    function it_consumes_event(Document $document): void
     {
-        $event->getObject()->willReturn($product);
-        $event->getDocument()->willReturn($document);
-
-        $this->consumeEvent($event);
+        $this->consumeEvent(EventMother::createPostTransformEvent($document));
     }
 }

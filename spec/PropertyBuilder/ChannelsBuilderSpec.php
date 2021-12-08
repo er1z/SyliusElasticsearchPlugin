@@ -17,8 +17,11 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ChannelsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
+use Elastica\Document;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ProductInterface;
+use spec\BitBag\SyliusElasticsearchPlugin\EventMother;
 
 final class ChannelsBuilderSpec extends ObjectBehavior
 {
@@ -38,11 +41,8 @@ final class ChannelsBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event, ProductInterface $product, Document $document): void
+    function it_consumes_event(Document $document): void
     {
-        $event->getObject()->willReturn($product);
-        $event->getDocument()->willReturn($document);
-
-        $this->consumeEvent($event);
+        $this->consumeEvent(EventMother::createPostTransformEvent($document));
     }
 }

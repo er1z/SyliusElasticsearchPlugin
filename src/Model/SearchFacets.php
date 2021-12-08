@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Model;
@@ -29,7 +35,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function current()
     {
@@ -37,7 +43,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function next()
     {
@@ -45,7 +51,7 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function key()
     {
@@ -53,17 +59,17 @@ class SearchFacets implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function valid()
     {
         $key = key($this->selectedBuckets);
 
-        return $key !== null && $key !== false;
+        return null !== $key && false !== $key;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rewind()
     {

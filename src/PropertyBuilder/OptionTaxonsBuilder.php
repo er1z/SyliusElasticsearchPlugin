@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -14,7 +12,7 @@ namespace BitBag\SyliusElasticsearchPlugin\PropertyBuilder;
 
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\Repository\ProductVariantRepositoryInterface;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Product\Model\ProductOptionInterface;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
@@ -32,9 +30,6 @@ final class OptionTaxonsBuilder extends AbstractBuilder
     private $productTaxonsMapper;
 
     /** @var string */
-    private $optionProperty;
-
-    /** @var string */
     private $taxonsProperty;
 
     /** @var array */
@@ -44,19 +39,17 @@ final class OptionTaxonsBuilder extends AbstractBuilder
         RepositoryInterface $productOptionValueRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
         ProductTaxonsMapperInterface $productTaxonsMapper,
-        string $optionProperty,
         string $taxonsProperty,
         array $excludedOptions = []
     ) {
         $this->productOptionValueRepository = $productOptionValueRepository;
         $this->productVariantRepository = $productVariantRepository;
         $this->productTaxonsMapper = $productTaxonsMapper;
-        $this->optionProperty = $optionProperty;
         $this->taxonsProperty = $taxonsProperty;
         $this->excludedOptions = $excludedOptions;
     }
 
-    public function consumeEvent(TransformEvent $event): void
+    public function consumeEvent(PostTransformEvent $event): void
     {
         $documentProductOption = $event->getObject();
 

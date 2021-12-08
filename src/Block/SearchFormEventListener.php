@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Block;
@@ -26,7 +32,11 @@ final class SearchFormEventListener
     /** @var FormInterface */
     private $form;
 
-    public function __construct(string $template, FormFactoryInterface $formFactory, RouterInterface $router)
+    public function __construct(
+        string $template,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router
+    )
     {
         $this->template = $template;
         $this->formFactory = $formFactory;
@@ -42,7 +52,7 @@ final class SearchFormEventListener
                 $event->getSettings(),
                 [
                     'template' => $this->template,
-                    'form' => $this->getForm()->createView()
+                    'form' => $this->getForm()->createView(),
                 ]
             )
         );
@@ -60,6 +70,7 @@ final class SearchFormEventListener
             $this->form = $this->formFactory
                 ->create(SearchType::class, $search, ['action' => $this->router->generate('bitbag_sylius_elasticsearch_plugin_shop_search')]);
         }
+
         return $this->form;
     }
 }

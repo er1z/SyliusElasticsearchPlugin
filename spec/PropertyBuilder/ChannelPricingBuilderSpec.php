@@ -42,11 +42,8 @@ final class ChannelPricingBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event, ProductInterface $product, Document $document): void
+    function it_consumes_event(Document $document): void
     {
-        $event->getObject()->willReturn($product);
-        $event->getDocument()->willReturn($document);
-
-        $this->consumeEvent($event);
+        $this->consumeEvent(EventMother::createPostTransformEvent($document));
     }
 }

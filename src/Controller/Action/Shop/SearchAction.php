@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
+
 declare(strict_types=1);
 
 namespace BitBag\SyliusElasticsearchPlugin\Controller\Action\Shop;
@@ -11,14 +17,14 @@ use BitBag\SyliusElasticsearchPlugin\Model\Search;
 use BitBag\SyliusElasticsearchPlugin\QueryBuilder\QueryBuilderInterface;
 use Elastica\Query;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 final class SearchAction
 {
-    /** @var EngineInterface */
-    private $templatingEngine;
+    /** @var Environment */
+    private $twig;
 
     /** @var PaginatedFinderInterface */
     private $finder;
@@ -36,14 +42,14 @@ final class SearchAction
     private $paginationDataHandler;
 
     public function __construct(
-        EngineInterface $templatingEngine,
+        Environment $twig,
         PaginatedFinderInterface $finder,
         SearchFormEventListener $searchFormEventListener,
         RegistryInterface $facetRegistry,
         QueryBuilderInterface $searchProductsQueryBuilder,
         PaginationDataHandlerInterface $paginationDataHandler
     ) {
-        $this->templatingEngine = $templatingEngine;
+        $this->twig = $twig;
         $this->finder = $finder;
         $this->searchFormEventListener = $searchFormEventListener;
         $this->facetRegistry = $facetRegistry;
@@ -85,9 +91,9 @@ final class SearchAction
             $results->setMaxPerPage($paginationData[PaginationDataHandlerInterface::LIMIT_INDEX]);
         }
 
-        return $this->templatingEngine->renderResponse(
+        return new Response($this->twig->render(
             $template,
             ['results' => $results, 'searchForm' => $form->createView()]
-        );
+        ));
     }
 }

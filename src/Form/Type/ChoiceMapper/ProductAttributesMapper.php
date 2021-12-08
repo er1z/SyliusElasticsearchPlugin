@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -17,7 +15,6 @@ use BitBag\SyliusElasticsearchPlugin\Repository\ProductAttributeValueRepositoryI
 use Sylius\Component\Attribute\AttributeType\SelectAttributeType;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Sylius\Component\Product\Model\ProductAttributeInterface;
-use Sylius\Component\Product\Model\ProductAttributeValueInterface;
 
 final class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
@@ -59,17 +56,10 @@ final class ProductAttributesMapper implements ProductAttributesMapperInterface
         $attributeValues = $this->productAttributeValueRepository->getUniqueAttributeValues($productAttribute);
 
         $choices = [];
-        array_walk($attributeValues, function (ProductAttributeValueInterface $productAttributeValue) use (&$choices): void {
-            $product = $productAttributeValue->getProduct();
+        array_walk($attributeValues, function ($productAttributeValue) use (&$choices, $productAttribute): void {
+            $value = $productAttributeValue['value'];
 
-            if (!$product->isEnabled()) {
-                unset($product);
-
-                return;
-            }
-
-            $value = $productAttributeValue->getValue();
-            $configuration = $productAttributeValue->getAttribute()->getConfiguration();
+            $configuration = $productAttribute->getConfiguration();
 
             if (is_array($value)
                 && isset($configuration['choices'])

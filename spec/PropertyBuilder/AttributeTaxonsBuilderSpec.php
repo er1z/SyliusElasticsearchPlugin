@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file has been created by developers from BitBag.
- * Feel free to contact us once you face any issues or want to start
- * another great project.
- * You can find more information about us on https://bitbag.shop and write us
- * an email on mikolaj.krol@bitbag.pl.
- */
+ * This file was created by developers working at BitBag
+ * Do you need more information about us and what we do? Visit our https://bitbag.io website!
+ * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
+*/
 
 declare(strict_types=1);
 
@@ -17,11 +15,12 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AttributeTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use Elastica\Document;
+use FOS\ElasticaBundle\Event\PostTransformEvent;
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Sylius\Component\Attribute\Model\AttributeInterface;
 
+use spec\BitBag\SyliusElasticsearchPlugin\EventMother;
 final class AttributeTaxonsBuilderSpec extends ObjectBehavior
 {
     function let(TaxonRepositoryInterface $taxonRepository): void
@@ -47,11 +46,6 @@ final class AttributeTaxonsBuilderSpec extends ObjectBehavior
 
     function it_consumes_event(TransformEvent $event, AttributeInterface $attribute, Document $document): void
     {
-        $event->getObject()->willReturn($attribute);
-        $event->getDocument()->willReturn($document);
-
-        $document->set(Argument::any(), Argument::any())->willReturn($document);
-
-        $this->consumeEvent($event);
+        $this->consumeEvent(EventMother::createPostTransformEvent($document));
     }
 }
